@@ -1,5 +1,6 @@
 import React from "react";
 import "./MainPage.css";
+import { Link } from "react-router-dom";
 
 const MainPage = () => {
   return (
@@ -7,7 +8,7 @@ const MainPage = () => {
       <nav className="main-navbar">
         <div className="main-logo">서비스 로고 | 이름</div>
         <div className="main-menu">
-          <span>프로필 | 설정</span>
+          <Link to="/profile">프로필|설정</Link>
           <span>나의 통계</span>
           <span>노래 추천</span>
           <span>눈 인식 제어</span>
