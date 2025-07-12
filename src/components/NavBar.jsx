@@ -10,6 +10,7 @@ const NavBar = () => (
       <Link to="/stats">나의 통계</Link>
       <Link to="/recommend">노래 추천</Link>
       <Link to="/eye">눈 인식 제어</Link>
+  
     </div>
     <div className="profile-area">
       <img
