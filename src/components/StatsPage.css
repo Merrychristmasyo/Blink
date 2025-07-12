@@ -56,3 +56,12 @@
 .react-calendar__month-view__days__day--neighboringMonth {
   color: #d0cfcf !important;
 }
+
+/* 모든 스크롤바 숨기기 (Webkit 브라우저) */
+.my-record-list {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE, Edge */
+}
+.my-record-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

@@ -20,6 +20,7 @@ const StatsPage = () => {
     { id: 1, values: [80, 90, 100, 110, 120], date: "2024-07-08" },
     { id: 2, values: [70, 85, 95, 105, 115], date: "2024-07-08" },
     { id: 3, values: [60, 75, 85, 95, 105], date: "2024-07-08" },
+    { id: 4, values: [65, 80, 90, 100, 110], date: "2024-07-08" }
     // ...더 많은 기록
   ];
 
@@ -35,22 +36,30 @@ const StatsPage = () => {
   return (
     <div style={{
       width: "100vw",
-      minHeight: "100vh",
+      height: "100vh",         // 브라우저 높이 고정
+      overflow: "hidden",      // 브라우저 스크롤 막기
       background: "#fff",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      paddingTop: "80px" // 네비게이션 바 높이만큼(또는 원하는 만큼)
+      paddingTop: "150px" // 네비게이션 바 높이만큼(또는 원하는 만큼)
     }}>
       <div style={{
         width: "90%",
-        marginTop: "40px",
+        height: "calc(100vh - 100px)", // 네비게이션 바+상단 여백만큼 빼기
+        margin: "0 auto",
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between"
       }}>
         {/* 좌측 */}
-        <div style={{ width: "40%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={{
+          width: "40%",
+          height: "100%", // 부모 높이에 맞춤
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
+        }}>
           {/* 상단: 평균/최고/최저 */}
           <div
             style={{
@@ -98,17 +107,23 @@ const StatsPage = () => {
               justifyContent: "center",
               fontWeight: "normal",
               fontSize: "18px",
-              gap: "150px"
+              gap: "80px" //값들 사이 간격 조절
             }}>
-              <div style={{ textAlign: "center" }}>{avg} blinked<br />/ min</div>
-              <div style={{ textAlign: "center" }}>{max} blinked<br />/ min</div>
-              <div style={{ textAlign: "center" }}>{min} blinked<br />/ min</div>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ whiteSpace: "nowrap" }}>{avg} blinked / min</div>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ whiteSpace: "nowrap" }}>{max} blinked / min</div>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ whiteSpace: "nowrap" }}>{min} blinked / min</div>
+              </div>
             </div>
           </div>
           {/* 하단: 달력 */}
           <div
             style={{
-              width: "100%",           // 원하는 너비로 조정
+              width: "80%",           // 원하는 너비로 조정
               margin: "0 auto",         // 가운데 정렬
               background: "#fff",
               borderRadius: "16px",
@@ -124,32 +139,42 @@ const StatsPage = () => {
             />
           </div>
         </div>
+        
         {/* 우측: 그래프 리스트 */}
         <div style={{
-          width: "55%",
+          width: "60%",
+          height: "100%", // 부모 높이에 맞춤
           display: "flex",
           flexDirection: "column",
           alignItems: "center"
         }}>
-          <div style={{
-            width: "100%",
-            height: "340px",
-            overflowY: "auto",
-            display: "flex",
-            flexDirection: "column",
-            gap: "24px"
-          }}>
+          <div
+            className="my-record-list"
+            style={{
+              width: "100%",
+              height: "100%",         // 부모(우측 영역)에 맞춤
+              overflowY: "auto",      // 세로 스크롤은 유지
+              overflowX: "hidden",    // 가로 스크롤은 숨김
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+              justifyContent: "flex-start", // 기록이 위에 붙게
+              flex: 1
+            }}
+          >
             {records.map((rec, idx) => (
               <div
                 key={rec.id}
-                onMouseEnter={() => setHighlightIdx(idx)}
+                onMouseEnter={() => setHighlightIdx(idx)} // 마우스 올리면 강조
+                onMouseLeave={() => setHighlightIdx(null)} //마우스 떼면 강조 해제
                 style={{
                   background: "#eee",
                   borderRadius: "20px",
                   padding: "24px",
                   marginBottom: idx === records.length - 1 ? 0 : "12px",
                   boxShadow: highlightIdx === idx ? "0 4px 24px #bcbcff" : "0 2px 8px #eee",
-                  transform: highlightIdx === idx ? "scale(1.04)" : "scale(1)",
+                  transform: highlightIdx === idx ? "scale(0.95)" : "scale(0.9)", // 강조 : 기본
+                  opacity: highlightIdx === null || highlightIdx === idx ? 1 : 0.5,
                   transition: "all 0.2s",
                   cursor: "pointer"
                 }}
@@ -160,7 +185,7 @@ const StatsPage = () => {
                   {/* 그래프 자리 */}
                 </div>
                 <div>현재 측정 기록: {rec.values[rec.values.length - 1]} blinked / min</div>
-                <div>과거 측정 기록: {rec.values[0]} blinked / min</div>
+                <div>과거(?) 측정 기록: {rec.values[0]} blinked / min</div>
               </div>
             ))}
           </div>
