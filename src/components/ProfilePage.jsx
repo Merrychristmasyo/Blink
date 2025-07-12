@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import './StatsPage.css';
 
 // ProfilePage 안에 ToggleSwitch 컴포넌트 선언
 const ToggleSwitch = ({ checked, onChange }) => (

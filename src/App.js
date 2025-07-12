@@ -5,6 +5,7 @@ import MainPage from "./components/MainPage";
 import ProfilePage from "./components/ProfilePage";
 import EditProfilePage from "./components/EditProfilePage";
 import EyeControlPage from "./components/EyeControlPage";
+import StatsPage from "./components/StatsPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route path="/eye" element={<EyeControlPage />} />
+        <Route path="/stats" element={<StatsPage />} />
       </Routes>
     </Router>
   );
